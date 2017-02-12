@@ -1,3 +1,8 @@
+var placeholders = {
+    data: '%data%',
+    contact: '%contact%'
+};
+
 var bio = {
     name: 'Fernando Ferreira',
     role: 'Web Developer',
@@ -15,35 +20,34 @@ var bio = {
     ],
     biopic: 'http://en.gravatar.com/userimage/57982035/fba451bc86c18f85d5c441cf6cd00b5e.jpg?size=400',
     display: function() {
-        var formatedName = HTMLheaderName.replace('%data%', bio.name);
-        var formatedRole = HTMLheaderRole.replace('%data%', bio.role);
+        var formattedName = HTMLheaderName.replace(placeholders.data, bio.name);
+        var formattedRole = HTMLheaderRole.replace(placeholders.data, bio.role);
 
-        var formaterMobile = HTMLmobile.replace('%data%', bio.contacts.mobile);
-        var formatedEmail = HTMLemail.replace('%data%', bio.contacts.email);
-        var formatedLinkedIn = HTMLcontactGeneric.replace('%contact%', 'linkedIn').replace('%data%', bio.contacts.linkedin);
-        var formatedGit = HTMLgithub.replace('%data%', bio.contacts.github);
-        var formatedLocation = HTMLlocation.replace('%data%', bio.contacts.location);
+        var formatedMobile = HTMLmobile.replace(placeholders.data, bio.contacts.mobile);
+        var formattedEmail = HTMLemail.replace(placeholders.data, bio.contacts.email);
+        var formattedLinkedIn = HTMLcontactGeneric.replace(placeholders.contact, 'linkedIn').replace(placeholders.data, bio.contacts.linkedin);
+        var formattedGit = HTMLgithub.replace(placeholders.data, bio.contacts.github);
+        var formattedLocation = HTMLlocation.replace(placeholders.data, bio.contacts.location);
 
-        var formatedPic = HTMLbioPic.replace('%data%', bio.biopic);
-        var formatedMsg = HTMLwelcomeMsg.replace('%data%', bio.welcomeMessage);
+        var formattedPic = HTMLbioPic.replace(placeholders.data, bio.biopic);
+        var formattedMsg = HTMLwelcomeMsg.replace(placeholders.data, bio.welcomeMessage);
 
-        var formatedSkilsStart = HTMLskillsStart;
-        var formatedSkills = HTMLskills.replace('%data%', bio.skills.join(', '));
+        var formattedSkilsStart = HTMLskillsStart;
+        var formattedSkills = '';
+        for (var i = 0; i < bio.skills.length; i++) {
+            formattedSkills += HTMLskills.replace(placeholders.data, bio.skills[i]);
+        }
 
-        $('#header').prepend(formatedRole);
-        $('#header').prepend(formatedName);
+        $('#header').prepend(formattedRole);
+        $('#header').prepend(formattedName);
 
-        $('#topContacts').append(formaterMobile);
-        $('#topContacts').append(formatedEmail);
-        $('#topContacts').append(formatedLinkedIn);
-        $('#topContacts').append(formatedGit);
-        $('#topContacts').append(formatedLocation);
+        $("#topContacts, #footerContacts").append(formatedMobile, formattedEmail, formattedLinkedIn, formattedGit, formattedLocation);
 
-        $('#header').append(formatedPic);
-        $('#header').append(formatedMsg);
+        $('#header').append(formattedPic);
+        $('#header').append(formattedMsg);
+        $('#header').append(formattedSkilsStart);
 
-        $('#header').append(formatedSkilsStart);
-        $('#skills').append(formatedSkills);
+        $('#skills').append(formattedSkills);
     }
 };
 
@@ -114,25 +118,25 @@ var education = {
         for (var i = 0; i < education.schools.length; i++) {
             $('#education').append(HTMLschoolStart);
 
-            var formatedSchoolName = HTMLschoolName.replace('%data%', education.schools[i].name);
-            var formatedSchoolDegree = HTMLschoolDegree.replace('%data%', education.schools[i].degree);
-            var formatedSchoolDate = HTMLschoolDates.replace('%data%', education.schools[i].dates);
-            var formatedSchoolLocation = HTMLschoolLocation.replace('%data%', education.schools[i].location);
-            var formatedSchoolMajos = HTMLschoolMajor.replace('%data%', education.schools[i].majors.join(', '));
+            var formattedSchoolName = HTMLschoolName.replace(placeholders.data, education.schools[i].name).replace('#', education.schools[i].url);
+            var formattedSchoolDegree = HTMLschoolDegree.replace(placeholders.data, education.schools[i].degree);
+            var formattedSchoolDate = HTMLschoolDates.replace(placeholders.data, education.schools[i].dates);
+            var formattedSchoolLocation = HTMLschoolLocation.replace(placeholders.data, education.schools[i].location);
+            var formattedSchoolMajos = HTMLschoolMajor.replace(placeholders.data, education.schools[i].majors.join(', '));
 
-            $('.education-entry:last').append(formatedSchoolName + formatedSchoolDegree + formatedSchoolDate + formatedSchoolLocation + formatedSchoolMajos);
+            $('.education-entry:last').append(formattedSchoolName + formattedSchoolDegree + formattedSchoolDate + formattedSchoolLocation + formattedSchoolMajos);
         }
 
         $('#education').append(HTMLonlineClasses);
         for (var j = 0; j < education.onlineCourses.length; j++) {
             $('#education').append(HTMLschoolStart);
 
-            var formatedOnlineTitle = HTMLonlineTitle.replace('%data%', education.onlineCourses[j].title);
-            var formatedOnlineSchool = HTMLonlineSchool.replace('%data%', education.onlineCourses[j].school);
-            var formatedOnlineDates = HTMLonlineDates.replace('%data%', education.onlineCourses[j].dates);
-            var formatedOnlineURL = HTMLonlineURL.replace('%data%', education.onlineCourses[j].url);
+            var formattedOnlineTitle = HTMLonlineTitle.replace(placeholders.data, education.onlineCourses[j].title).replace('#', education.onlineCourses[j].url);
+            var formattedOnlineSchool = HTMLonlineSchool.replace(placeholders.data, education.onlineCourses[j].school);
+            var formattedOnlineDates = HTMLonlineDates.replace(placeholders.data, education.onlineCourses[j].dates);
+            var formattedOnlineURL = HTMLonlineURL.replace(placeholders.data, education.onlineCourses[j].url);
 
-            $('.education-entry:last').append(formatedOnlineTitle + formatedOnlineSchool + formatedOnlineDates + formatedOnlineURL);
+            $('.education-entry:last').append(formattedOnlineTitle, formattedOnlineSchool, formattedOnlineDates, formattedOnlineURL);
         }
 
     }
@@ -143,53 +147,41 @@ var work = {
         employer: 'Virtus',
         title: 'Web Developer',
         location: 'Campina Grande',
-        dates: {
-            from: 'April 2016',
-            to: ''
-        },
+        dates: 'April 2016',
         description: 'Font end development of a marketing campaign creation system with Javascript, AngularJS, HTML, CSS, Sass and related. And backend development with Java, Spring, Maven, Postgree and related technologies. The company that the project is developed to is called Valid.'
     }, {
         employer: 'Stefanini',
         title: 'Software Developer',
         location: 'Campina Grande',
-        dates: {
-            from: 'October 2015',
-            to: 'April 2015'
-        },
+        dates: 'October 2015 - April 2015',
         description: 'Click to edit position description Backend and frontend development. The project is the remodeling of the largest Bank of Brazil (Banco do Brasil) internal system and it takes place on a remote “software factory” that is constant contact with the Bank staff for the project development (JAVA, RestEasy, Maven, JBoss Seam, Javascript, JQuery, Angular, HTML5, CSS3).'
     }, {
         employer: 'Paraíba State University',
         title: 'Systems Analyst',
         location: 'Campina Grande',
-        dates: {
-            from: 'August 2015',
-            to: 'October 2015'
-        },
+        dates: 'August 2015 - October 2015',
         description: 'Worked on the advanced development department creating systems for the institution. This project was the integration of the university database with the LATTES platform which holds data related to professors academic production for the whole country (JAVA, JSF, JPA, SQL, SVN, HTML5, CSS3, Scrum).'
     }, {
         employer: 'Recursive',
         title: 'Junior Consultant',
         location: 'Cajazeiras',
-        dates: {
-            from: 'August 2013',
-            to: 'March 2015'
-        },
+        dates: 'August 2013 - March 2015',
         description: 'Analysis, systems development and database design. Technologies used: Java, PHP, Javascript, JQuery, HTML, CSS, MySQL and GIT.'
     }],
     display: function() {
         for (var i = 0; i < work.jobs.length; i++) {
             $('#workExperience').append(HTMLworkStart);
 
-            var formatedEmployer = HTMLworkEmployer.replace('%data%', work.jobs[i].employer);
-            var formaterTitle = HTMLworkTitle.replace('%data%', work.jobs[i].title);
-            var formaterEmployerTitle = formatedEmployer + formaterTitle;
+            var formattedEmployer = HTMLworkEmployer.replace(placeholders.data, work.jobs[i].employer);
+            var formaterTitle = HTMLworkTitle.replace(placeholders.data, work.jobs[i].title);
+            var formaterEmployerTitle = formattedEmployer + formaterTitle;
             $('.work-entry:last').append(formaterEmployerTitle);
 
-            var formatedWorkDate = HTMLworkDates.replace('%data%', work.jobs[i].dates.from + ' - ' + work.jobs[i].dates.to);
-            $('.work-entry:last').append(formatedWorkDate);
+            var formattedWorkDate = HTMLworkDates.replace(placeholders.data, work.jobs[i].dates);
+            $('.work-entry:last').append(formattedWorkDate);
 
-            var formatedDescription = HTMLworkDescription.replace('%data%', work.jobs[i].description);
-            $('.work-entry:last').append(formatedDescription);
+            var formattedDescription = HTMLworkDescription.replace(placeholders.data, work.jobs[i].description);
+            $('.work-entry:last').append(formattedDescription);
 
         }
     }
@@ -212,15 +204,15 @@ var projects = {
         for (var i = 0; i < projects.projects.length; i++) {
             $('#projects').append(HTMLprojectStart);
 
-            var formatedProjectTitle = HTMLprojectTitle.replace('%data%', projects.projects[i].title);
-            var formatedProjectDates = HTMLprojectDates.replace('%data%', projects.projects[i].dates);
-            var formatedProjectDescription = HTMLprojectDescription.replace('%data%', projects.projects[i].description);
+            var formattedProjectTitle = HTMLprojectTitle.replace(placeholders.data, projects.projects[i].title);
+            var formattedProjectDates = HTMLprojectDates.replace(placeholders.data, projects.projects[i].dates);
+            var formattedProjectDescription = HTMLprojectDescription.replace(placeholders.data, projects.projects[i].description);
 
-            var formatedImages = '';
+            var formattedImages = '';
             for (var j = 0; j < projects.projects[i].images.length; j++) {
-                formatedImages += HTMLprojectImage.replace('%data%', projects.projects[i].images[j]);
+                formattedImages += HTMLprojectImage.replace(placeholders.data, projects.projects[i].images[j]);
             }
-            $('.project-entry:last').append(formatedProjectTitle + formatedProjectDates + formatedProjectDescription + formatedImages);
+            $('.project-entry:last').append(formattedProjectTitle, formattedProjectDates, formattedProjectDescription, formattedImages);
         }
     }
 
@@ -233,8 +225,6 @@ var init = function() {
     projects.display();
 
     $('#mapDiv').append(googleMap);
-
-    $('#topContacts').children().clone().appendTo('#footerContacts');
 };
 
 init();
