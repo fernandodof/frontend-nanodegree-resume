@@ -124,13 +124,13 @@ var education = {
         }
 
         $('#education').append(HTMLonlineClasses);
-        for (var i = 0; i < education.onlineCourses.length; i++) {
+        for (var j = 0; j < education.onlineCourses.length; j++) {
             $('#education').append(HTMLschoolStart);
 
-            var formatedOnlineTitle = HTMLonlineTitle.replace('%data%', education.onlineCourses[i].title);
-            var formatedOnlineSchool = HTMLonlineSchool.replace('%data%', education.onlineCourses[i].school);;
-            var formatedOnlineDates = HTMLonlineDates.replace('%data%', education.onlineCourses[i].dates);;
-            var formatedOnlineURL = HTMLonlineURL.replace('%data%', education.onlineCourses[i].url);
+            var formatedOnlineTitle = HTMLonlineTitle.replace('%data%', education.onlineCourses[j].title);
+            var formatedOnlineSchool = HTMLonlineSchool.replace('%data%', education.onlineCourses[j].school);
+            var formatedOnlineDates = HTMLonlineDates.replace('%data%', education.onlineCourses[j].dates);
+            var formatedOnlineURL = HTMLonlineURL.replace('%data%', education.onlineCourses[j].url);
 
             $('.education-entry:last').append(formatedOnlineTitle + formatedOnlineSchool + formatedOnlineDates + formatedOnlineURL);
         }
@@ -177,18 +177,18 @@ var work = {
         description: 'Analysis, systems development and database design. Technologies used: Java, PHP, Javascript, JQuery, HTML, CSS, MySQL and GIT.'
     }],
     display: function() {
-        for (job in work.jobs) {
+        for (var i = 0; i < work.jobs.length; i++) {
             $('#workExperience').append(HTMLworkStart);
 
-            var formatedEmployer = HTMLworkEmployer.replace('%data%', work.jobs[job].employer);
-            var formaterTitle = HTMLworkTitle.replace('%data%', work.jobs[job].title);
+            var formatedEmployer = HTMLworkEmployer.replace('%data%', work.jobs[i].employer);
+            var formaterTitle = HTMLworkTitle.replace('%data%', work.jobs[i].title);
             var formaterEmployerTitle = formatedEmployer + formaterTitle;
             $('.work-entry:last').append(formaterEmployerTitle);
 
-            var formatedWorkDate = HTMLworkDates.replace('%data%', work.jobs[job].dates.from + ' - ' + work.jobs[job].dates.to);
+            var formatedWorkDate = HTMLworkDates.replace('%data%', work.jobs[i].dates.from + ' - ' + work.jobs[i].dates.to);
             $('.work-entry:last').append(formatedWorkDate);
 
-            var formatedDescription = HTMLworkDescription.replace('%data%', work.jobs[job].description);
+            var formatedDescription = HTMLworkDescription.replace('%data%', work.jobs[i].description);
             $('.work-entry:last').append(formatedDescription);
 
         }
@@ -235,6 +235,6 @@ var init = function() {
     $('#mapDiv').append(googleMap);
 
     $('#topContacts').children().clone().appendTo('#footerContacts');
-}
+};
 
 init();
